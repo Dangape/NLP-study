@@ -23,16 +23,17 @@ print(titles.columns)
 
 global data,number
 columns = ["movies","critics"]
-dict = {"movies": [],
-        "critics": []}
-df = pd.DataFrame()
+
+df = pd.DataFrame({"movies": [],
+        "critics": []})
+
 data = []
 number = []
 
-movie = "toy_story_3"
-for k in range(0,1):
-    movie = titles.iloc[10,0]
-    for j in range(0,20):
+teste = ["star_wars","borat"]
+for k in range(0,2):
+    movie = teste[k]
+    for j in range(0,5):
         url = "https://www.rottentomatoes.com/m/"+movie+"/reviews?type=top_critics&sort=&page="+str(j)
         html_content = requests.get(url).text
         soup = BeautifulSoup(html_content, "lxml")
@@ -46,14 +47,17 @@ for k in range(0,1):
             critic = string[end:start]
             data.append(critic)
             data[i] = str(data[i]).strip()
+            new_row = {"movies": movie, "critics": data[i]}
+            df = df.append(new_row, ignore_index= True)
         number.append(len(data))
         if len(number)>1 and number[j-1] == number[j]:
             break
         else:
-            continue
+            pass
 
 for i in range(0,len(data)):
     data[i] = str(data[i]).strip()
 
 print("There were found " + str(len(data)) + " critics for "+movie)
-print(data)
+print(df)
+df.to_excel("output.xlsx")
