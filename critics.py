@@ -19,7 +19,6 @@ titles["original_title"] = titles["original_title"].apply(lambda x:x.lower())
 titles["original_title"] = titles["original_title"].apply(lambda x:x.replace(" ","_"))
 titles["original_title"] = titles["original_title"].apply(lambda x:x.replace(":",""))
 
-print(titles.columns)
 
 global data,number
 df = pd.DataFrame({"movies": [],
@@ -30,8 +29,8 @@ number = []
 
 teste = ["star_wars","borat","transformers_the_last_knight"]
 
-for k in range(0,len(teste)):
-    movie = teste[k]
+for k in range(0,len(titles)):
+    movie = titles.iloc[k,0]
     for j in range(0,5):
         url = "https://www.rottentomatoes.com/m/"+movie+"/reviews?type=top_critics&sort=&page="+str(j)
         html_content = requests.get(url).text
@@ -49,15 +48,14 @@ for k in range(0,len(teste)):
             new_row = {"movies": movie, "critics": data[-1]}
             df = df.append(new_row, ignore_index= True)
         number.append(len(data))
-        if len(number)>1 and number[j-1] == number[j]:
-            break
-        else:
-            pass
+        # if len(number)>1 and number[j-1] == number[j]:
+        #     break
+        # else:
+        #     pass
 
 for i in range(0,len(data)):
     data[i] = str(data[i]).strip()
 
 print("There were found " + str(len(data)) + " critics for "+movie)
-print(len(data))
 print(df)
 df.to_excel("output.xlsx")
