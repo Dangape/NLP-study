@@ -29,6 +29,7 @@ data = []
 number = []
 
 teste = ["star_wars","borat"]
+
 for k in range(0,2):
     movie = teste[k]
     for j in range(0,5):
@@ -44,8 +45,8 @@ for k in range(0,2):
             start = n.start()
             critic = string[end:start]
             data.append(critic)
-            data[i] = str(data[i]).strip()
-            new_row = {"movies": movie, "critics": data[i]}
+            data[-1] = str(data[-1]).strip()
+            new_row = {"movies": movie, "critics": data[-1]}
             df = df.append(new_row, ignore_index= True)
         number.append(len(data))
         if len(number)>1 and number[j-1] == number[j]:
@@ -57,5 +58,6 @@ for i in range(0,len(data)):
     data[i] = str(data[i]).strip()
 
 print("There were found " + str(len(data)) + " critics for "+movie)
+print(len(data))
 print(df)
 df.to_excel("output.xlsx")
