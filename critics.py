@@ -22,8 +22,6 @@ titles["original_title"] = titles["original_title"].apply(lambda x:x.replace(":"
 print(titles.columns)
 
 global data,number
-columns = ["movies","critics"]
-
 df = pd.DataFrame({"movies": [],
         "critics": []})
 
