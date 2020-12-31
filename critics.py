@@ -28,9 +28,9 @@ df = pd.DataFrame({"movies": [],
 data = []
 number = []
 
-teste = ["star_wars","borat"]
+teste = ["star_wars","borat","transformers_the_last_knight"]
 
-for k in range(0,2):
+for k in range(0,len(teste)):
     movie = teste[k]
     for j in range(0,5):
         url = "https://www.rottentomatoes.com/m/"+movie+"/reviews?type=top_critics&sort=&page="+str(j)
