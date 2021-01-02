@@ -27,8 +27,6 @@ df = pd.DataFrame({"movies": [],
 data = []
 number = []
 
-#teste = ["star_wars","borat","transformers_the_last_knight"]
-
 for k in range(0,len(titles)):
     movie = titles.iloc[k,0]
     for j in range(0,5):
