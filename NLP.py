@@ -5,6 +5,8 @@ import numpy as np
 import textblob
 import nltk
 
-
-data = pd.read_excel("output.xlsx")
-print(data.head())
+#Loading dataset
+critics = pd.read_excel("output.xlsx", engine="openpyxl")
+critics = pd.DataFrame(critics)
+critics = critics[['movies',"critics"]]
+print(critics)
