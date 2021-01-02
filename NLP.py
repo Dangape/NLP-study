@@ -2,8 +2,9 @@
 # 31/12/2020 at 13:57
 import pandas as pd
 import numpy as np
-import textblob
 import nltk
+from nltk.corpus import stopwords
+from textblob import Word,TextBlob
 
 #Loading dataset
 critics = pd.read_excel("output.xlsx", engine="openpyxl")
