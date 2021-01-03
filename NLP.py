@@ -11,6 +11,9 @@ from textblob import Word,TextBlob
 critics = pd.read_excel("output.xlsx", engine="openpyxl")
 critics = pd.DataFrame(critics)
 critics = critics[['movies',"critics"]]
+critics = critics[critics['critics'].notnull()] #remove NaNs
+
+
 
 #NLP
 nltk.download("stopwords")
@@ -18,14 +21,12 @@ nltk.download("wordnet")
 stop_words = stopwords.words("english")
 
 #Function to remove stop words and lemmatize
-def process_critic(critic)
+def process_critic(critic):
     processed_critic = critic
-    for word in critic.split():
-        if word not in stop_words:
-            word = word
-        else:
-            word = ""
-return(processed_critic())
+    processed_critic = " ".join(word for word in processed_critic.split() if word not in stop_words) #remove stop words
+    processed_critic = " ".join(Word(word).lemmatize() for word in processed_critic.split()) #lemmatize words
+    return(processed_critic)
 
-critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x))
+
+critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x)) #apply function to all DataFrame
 print(critics.head())
