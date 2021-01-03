@@ -10,4 +10,8 @@ from textblob import Word,TextBlob
 critics = pd.read_excel("output.xlsx", engine="openpyxl")
 critics = pd.DataFrame(critics)
 critics = critics[['movies',"critics"]]
-print(critics)
+
+#NLP
+nltk.download("stopwords")
+nltk.download("wordnet")
+stop_words = stopwords.words("english")
