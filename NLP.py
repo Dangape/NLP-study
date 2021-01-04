@@ -16,6 +16,7 @@ critics = critics[critics['critics'].notnull()] #remove NaNs
 #NLP
 nltk.download("stopwords")
 nltk.download("wordnet")
+nltk.download("movie_reviews")
 stop_words = stopwords.words("english")
 
 #Function to remove stop words and lemmatize
@@ -27,4 +28,5 @@ def process_critic(critic):
 
 
 critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x)) #apply function to all DataFrame
-print(critics.head())
+
+print(movie_reviews.categories())
