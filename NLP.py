@@ -53,3 +53,5 @@ def find_feature(word_list):
     return(feature)
 
 feature_sets = [(find_feature(word_list),category) for (word_list,category) in document]
+
+print("end")
