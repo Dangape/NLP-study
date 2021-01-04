@@ -29,4 +29,8 @@ def process_critic(critic):
 
 critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x)) #apply function to all DataFrame
 
-print(movie_reviews.categories())
+#list with two sentiments in movie_reviews dataset (negative and positive)
+sentiment = movie_reviews.categories()
+
+#Create dict with frequency of words in movie_reviews dataset
+all_words = nltk.FreqDist(movie_reviews.words())
