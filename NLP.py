@@ -34,3 +34,9 @@ sentiment = movie_reviews.categories()
 
 #Create dict with frequency of words in movie_reviews dataset
 all_words = nltk.FreqDist(movie_reviews.words())
+#Define feature vector containing first 4000 words
+feature_vector = list(all_words)[:4000]
+
+
+document = [(movie_reviews.words(file_id),category) for file_id in movie_reviews.fileids() for category in movie_reviews.categories(file_id)]
+print(document)
