@@ -6,6 +6,9 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.corpus import movie_reviews
 from textblob import Word,TextBlob
+from nltk.classify.scikitlearn import SklearnClassifier
+from sklearn.svm import SVC
+from sklearn import model_selection
 
 #Loading dataset
 critics = pd.read_excel("output.xlsx", engine="openpyxl")
@@ -34,9 +37,19 @@ sentiment = movie_reviews.categories()
 
 #Create dict with frequency of words in movie_reviews dataset
 all_words = nltk.FreqDist(movie_reviews.words())
+
 #Define feature vector containing first 4000 words
 feature_vector = list(all_words)[:4000]
 
-
+#List of words of a review and the category of the review
 document = [(movie_reviews.words(file_id),category) for file_id in movie_reviews.fileids() for category in movie_reviews.categories(file_id)]
-print(document)
+
+#Function to search for the words of the review in the feature_vector
+def find_feature(word_list):
+    feature = {}
+    for x in feature_vector:
+        feature[x] = x in word_list
+
+    return(feature)
+
+feature_sets = [(find_feature(word_list),category) for (word_list,category) in document]
