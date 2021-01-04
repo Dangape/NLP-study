@@ -13,8 +13,6 @@ critics = pd.DataFrame(critics)
 critics = critics[['movies',"critics"]]
 critics = critics[critics['critics'].notnull()] #remove NaNs
 
-
-
 #NLP
 nltk.download("stopwords")
 nltk.download("wordnet")
