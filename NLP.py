@@ -9,6 +9,7 @@ from textblob import Word,TextBlob
 from nltk.classify.scikitlearn import SklearnClassifier
 from sklearn.svm import SVC
 from sklearn import model_selection
+import pickle
 
 #NLP
 #Download only at the first time you run the code
@@ -21,7 +22,7 @@ stop_words = stopwords.words("english")
 all_words = nltk.FreqDist(movie_reviews.words())
 
 #Define feature vector containing first 4000 words excluding stop words
-feature_vector = list(word for word in all_words if word not in stop_words)[:4000]
+feature_vector = list(word for word in all_words if word not in stop_words)
 
 #List of words of a review and the category of the review
 document = [(movie_reviews.words(file_id),category) for file_id in movie_reviews.fileids() for category in movie_reviews.categories(file_id)]
@@ -47,6 +48,7 @@ document = document.values.tolist()
 
 feature_sets = [(find_feature(word_list),category) for (word_list,category) in document]
 
+#Using a SVC model to predict the sentiment of a review
 train_set,test_set = model_selection.train_test_split(feature_sets,test_size = 0.25)
 
 model = SklearnClassifier(SVC(kernel = "linear"))
@@ -55,19 +57,7 @@ model.train(train_set)
 accuracy = nltk.classify.accuracy(model, test_set)
 print('SVC Accuracy : {}'.format(accuracy))
 
-#Testing the model with an outside dataset
-#Loading dataset
-# critics = pd.read_excel("output.xlsx", engine="openpyxl")
-# critics = pd.DataFrame(critics)
-# critics = critics[['movies',"critics"]]
-# critics = critics[critics['critics'].notnull()] #remove NaNs
+# save the model to disk
+filename = 'finalized_model.sav'
+pickle.dump(model, open(filename, 'wb'))
 
-#Function to remove stop words and lemmatize from movies dataset
-# def process_critic(critic):
-#     processed_critic = critic
-#     processed_critic = " ".join(word for word in processed_critic.split() if word not in stop_words) #remove stop words
-#     processed_critic = " ".join(Word(word).lemmatize() for word in processed_critic.split()) #lemmatize words
-#     return(processed_critic)
-#
-#
-# critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x)) #apply function to all DataFrame
