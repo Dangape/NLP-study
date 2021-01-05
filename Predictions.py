@@ -6,6 +6,10 @@ from textblob import Word,TextBlob
 from nltk.corpus import stopwords
 from nltk.corpus import movie_reviews
 import re
+import nltk
+from nltk.classify.scikitlearn import SklearnClassifier
+from sklearn.svm import SVC
+from sklearn import model_selection
 
 
 #Testing the model with an outside dataset
@@ -34,12 +38,5 @@ print(critics[0:2])
 filename = 'finalized_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 #result = loaded_model.score(X_test, Y_test)
-
-
-# #Create dict with frequency of words in movie_reviews dataset
-# all_words = nltk.FreqDist(movie_reviews.words())
-#
-# #Define feature vector containing first 4000 words excluding stop words
-# feature_vector = list(word for word in all_words if word not in stop_words)
-#
-# feature_sets = [(find_feature(word_list),category) for (word_list,category) in document]
+print(loaded_model.labels())
+loaded_model.classify(critics)
