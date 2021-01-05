@@ -11,13 +11,11 @@ from sklearn.svm import SVC
 from sklearn import model_selection
 
 #NLP
-#Download only the first time you run the code
+#Download only at the first time you run the code
 # nltk.download("stopwords")
 # nltk.download("wordnet")
 # nltk.download("movie_reviews")
 stop_words = stopwords.words("english")
-
-
 
 #Create dict with frequency of words in movie_reviews dataset
 all_words = nltk.FreqDist(movie_reviews.words())
@@ -34,10 +32,10 @@ def remove_stop_words(review):
     processed_critic = list(word for word in review if word not in stop_words)
     return  processed_critic
 
-document["processed_reviews"] = document["reviews"].apply(lambda x:remove_stop_words(x)) #apply function to all DataFrame
+document["reviews"] = document["reviews"].apply(lambda x:remove_stop_words(x)) #apply function to all DataFrame
 
 
-Function to search for the words of the review in the feature_vector
+#Function to search for the words of the review in the feature_vector
 def find_feature(word_list):
     feature = {}
     for x in feature_vector:
@@ -45,7 +43,17 @@ def find_feature(word_list):
 
     return(feature)
 
+document = document.values.tolist()
+
 feature_sets = [(find_feature(word_list),category) for (word_list,category) in document]
+
+train_set,test_set = model_selection.train_test_split(feature_sets,test_size = 0.25)
+
+model = SklearnClassifier(SVC(kernel = "linear"))
+model.train(train_set)
+
+accuracy = nltk.classify.accuracy(model, test_set)
+print('SVC Accuracy : {}'.format(accuracy))
 
 #Testing the model with an outside dataset
 #Loading dataset
