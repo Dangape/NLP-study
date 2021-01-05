@@ -1,5 +1,9 @@
 # Created by: Daniel Bemerguy 
 # 04/01/2021 at 23:13
+import pandas as pd
+import pickle
+from textblob import Word,TextBlob
+
 #Testing the model with an outside dataset
 #Loading dataset
 critics = pd.read_excel("output.xlsx", engine="openpyxl")
@@ -16,3 +20,8 @@ def process_critic(critic):
 
 
 critics["processed_critics"] = critics["critics"].apply(lambda x:process_critic(x)) #apply function to all DataFrame
+
+filename = 'finalized_model.sav'
+loaded_model = pickle.load(open(filename, 'rb'))
+result = loaded_model.score(X_test, Y_test)
+print(result)
