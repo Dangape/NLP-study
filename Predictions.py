@@ -47,4 +47,4 @@ df = pd.DataFrame({"sentiment":[],
 neg = (len(critics[critics["sentiment"]=="neg"])/len(critics))*100
 pos = (len(critics[critics["sentiment"]=="pos"])/len(critics))*100
 
-print("{}% of the critics are negative".format(neg)+" and {}% are positive".format(pos))
+print("{}% of the critics are negative".format(round(neg,2))+" and {}% are positive".format(round(pos,2))
