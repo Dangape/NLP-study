@@ -1,15 +1,16 @@
 # Created by: Daniel Bemerguy 
 # 31/12/2020 at 13:57
 import pandas as pd
-import numpy as np
 import nltk
 from nltk.corpus import stopwords
 from nltk.corpus import movie_reviews
 from textblob import Word,TextBlob
 from nltk.classify.scikitlearn import SklearnClassifier
+from nltk.classify import NaiveBayesClassifier
 from sklearn.svm import SVC
 from sklearn import model_selection
 import pickle
+
 
 #NLP
 #Download only at the first time you run the code
@@ -21,7 +22,7 @@ stop_words = stopwords.words("english")
 #Create dict with frequency of words in movie_reviews dataset
 all_words = nltk.FreqDist(movie_reviews.words())
 
-#Define feature vector containing first 4000 words excluding stop words
+#Define feature vector containing words excluding stop words
 feature_vector = list(word for word in all_words if word not in stop_words)
 
 #List of words of a review and the category of the review
@@ -51,13 +52,13 @@ feature_sets = [(find_feature(word_list),category) for (word_list,category) in d
 #Using a SVC model to predict the sentiment of a review
 train_set,test_set = model_selection.train_test_split(feature_sets,test_size = 0.25)
 
-model = SklearnClassifier(SVC(kernel = "linear"))
-model.train(train_set)
+#model = SklearnClassifier(SVC(kernel = "linear"))
+model = NaiveBayesClassifier.train(train_set)
 
 accuracy = nltk.classify.accuracy(model, test_set)
-print('SVC Accuracy : {}'.format(accuracy))
+print('SVC Accuracy : {}%'.format(accuracy*100))
 
 # save the model to disk
 filename = 'finalized_model.sav'
 pickle.dump(model, open(filename, 'wb'))
-
+pickle.dump(feature_vector, open("feature_vector.pickle","wb"))
