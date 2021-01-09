@@ -11,3 +11,11 @@ The accuracy of the model was 78%, which is not high.
 Finally, the Predictions.py file uses the model created to predict the sentiment of a critic fetched from rotten tomatoes.
 
 I hope this codes help anyone who is a begginer in machine learning and NLP. Furthermore, I am not a computer scientist, hence, do not expect high quality and good practices on my coding.
+
+Furthermore, how this code can be improved?
+
+1. Using another machine learning model
+
+2. Incorporate entity recognition and disambiguation
+
+3. Use a larger dataset
